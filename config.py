@@ -25,7 +25,7 @@ class DevelopmentConfig(ProductionConfig):
 
     # OPENPLC
     # OPENPLC_IP = '172.17.0.4'
-    OPENPLC_IP = '172.20.0.3'
+    OPENPLC_IP = '172.20.0.2'
     OPENPLC_MODBUS_PORT = 502
 
 
