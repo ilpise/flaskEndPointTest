@@ -79,21 +79,21 @@ def read():
     return(jsonify(ret), 200)
 
 
-# Check the pin inserted by the operator
-@api_blueprint.route('/operator/checkpin', methods=['POST'])
-def checkpin():
-    # print(request.get_json())
-    json = request.get_json()
+@api_blueprint.route('/modbus/api/carico', methods=['GET'])
+def carico():
+    OpenplcIp = current_app.config["OPENPLC_IP"]
+    ModbusPort = current_app.config["OPENPLC_MODBUS_PORT"]
 
-    # TODO - Deprecation warning: verify_password(password, user) has been changed to
-    #  : verify_password(password, password_hash).
-    #  The user param will be deprecated.
-    #  Please change your call with verify_password(password, user) into a call with
-    #  verify_password(password, user.password) as soon as possible.
+    # NOTE - the default port for modbus is 502
+    client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
+    client.connect()
 
-    if (current_app.user_manager.verify_password( json["pin"], current_user )):
-        ret = {"response": "OK"}
-    else:
-        ret = {"response": "KO"}
+    wc = client.write_coil( 521, 1, unit=UNIT )
 
+    assert (not wc.isError())
+    print(wc)
+    # print(wc.bits[0])
+    # logging.info( '%s logged in successfully', user.username )
+
+    ret = {"response": wc.bits[0]}
     return(jsonify(ret), 200)

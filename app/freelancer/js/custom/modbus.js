@@ -4,7 +4,7 @@
   Drupal.behaviors.Modbus = {
     attach: function(context, settings) {
 
-    $('button').click(function(event) {
+    $('button .erog').click(function(event) {
         console.log('PING')
         console.log($(this).attr("value"))
 
@@ -17,7 +17,25 @@
         function readModbusResponse (data, textStatus, jqXHR) {
             console.log(data)
 //            $('#mbresponse').html(data.response);
-            $('#mbresponse').html(data.response);
+            $('#erogresponse').html(data.response);
+        };
+
+        return false;
+    });
+
+    $('#s2_carico').click(function(event) {
+        console.log('CARICO')
+
+        $.ajax({
+          url : "/modbus/api/carico",
+          type : "GET",
+          success: caricoResponse,
+        });
+
+        function caricoResponse (data, textStatus, jqXHR) {
+            console.log(data)
+//            $('#mbresponse').html(data.response);
+            $('#carresponse').html(data.response);
         };
 
         return false;
