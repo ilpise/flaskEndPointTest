@@ -1,0 +1,100 @@
+{% extends "common/page_base.html" %}
+
+{% block content %}
+
+
+    <div class="card" style="width: 100%;">
+      <div class="card-body" style="min-height: 30vh;">
+
+        <div id="step1">
+        <div class="row">
+          <div class="col">
+            <p class="text-secondary fs-2">Ciao {{ user_name }} inserisci il tuo pin</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+              <div class="btn-group-vertical ml-4 mt-4" role="group" aria-label="Basic example">
+                <div class="btn-group">
+                    <input class="text-center form-control-lg mb-2" id="pin">
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '1';">1</button>
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '2';">2</button>
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '3';">3</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '4';">4</button>
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '5';">5</button>
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '6';">6</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '7';">7</button>
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '8';">8</button>
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '9';">9</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value.slice(0, -1);">DEL</button>
+                    <button type="button" class="btn btn-outline-secondary py-3" onclick="document.getElementById('pin').value=document.getElementById('pin').value + '0';">0</button>
+                    <button id="checkPin" type="button" class="btn btn-primary py-3" onclick="" >GO</button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p id="mbresponse" class="text-secondary fs-2"></p>
+          </div>
+        </div>
+        </div>
+
+        <div id="step2" style="display:none;">
+            <div class="row mb-5">
+              <div class="col">
+                  <button id="s2_carico" type="button" class="btn btn-primary btn-lg" >Carico Prodotto</button>
+              </div>
+              <div class="col">
+                  <button value="7.5" type="button" class="btn btn-primary btn-lg">Blocco Macchina</button>
+              </div>
+              <div class="col">
+                  <button value="15" type="button" class="btn btn-primary btn-lg">Verifica Componenti</button>
+              </div>
+            </div>
+            <div class="row mb-5">
+              <div class="col">
+                  <button value="5" type="button" class="btn btn-primary btn-lg" >Apertura Cassa</button>
+              </div>
+              <div class="col">
+                  <button value="7.5" type="button" class="btn btn-primary btn-lg">Gestione Prodotti</button>
+              </div>
+              <div class="col">
+                  <button value="15" type="button" class="btn btn-primary btn-lg">Gestione Alert</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                  <button value="5" type="button" class="btn btn-primary btn-lg" >Procedi come utente</button>
+              </div>
+            </div>
+
+        </div>
+
+        <div id="s_cs" style="display:none;">
+            <div class="row mb-5">
+              <div class="col">
+                  <button id="s_cs_carico" type="button" class="btn btn-primary btn-lg">Avvia Carico</button>
+              </div>
+              <div class="col">
+                  <button id="s_cs_blocco" type="button" class="btn btn-primary btn-lg">Blocco Carico</button>
+              </div>
+            </div>
+        </div>
+
+
+      </div>
+    </div>
+
+<script src="{{ url_for('static', filename='js/custom/operator.js') }}"></script>
+{% endblock %}
