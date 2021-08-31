@@ -75,7 +75,7 @@ def read():
     print(rr.registers)
     # logging.info( '%s logged in successfully', user.username )
 
-    # client.close()
+    client.close()
     ret = {"response": rr.registers}
     return(jsonify(ret), 200)
 
@@ -113,7 +113,7 @@ def eroga():
     assert (not ecs.isError())
     assert (not rr.isError())
 
-    # client.close()
+    client.close()
     ret = {"response": "Ciclo Scarico Abilitato"}
     # ret = {"response": "test"}
     return(jsonify(ret), 200)
@@ -136,7 +136,7 @@ def carico():
     # print(wc.bits[0])
     # logging.info( '%s logged in successfully', user.username )
 
-    # client.close()
+    client.close()
     ret = {"response": rr.bits[0]}
     return(jsonify(ret), 200)
 
@@ -154,7 +154,7 @@ def stop_carico():
     assert (not wc.isError())
     assert(not rr.isError())
 
-    # client.close()
+    client.close()
     ret = {"response": rr.bits[0]}
     return(jsonify(ret), 200)
 
@@ -189,7 +189,7 @@ def alarms():
     # print(wc.bits[0])
     # logging.info( '%s logged in successfully', user.username )
 
-    # client.close()
+    client.close()
     ret = {"rc1": rc1.bits, "rc2": rc2.bits}
 
     return(jsonify(ret), 200)
@@ -212,7 +212,8 @@ def reset_alarms():
     assert (not wc.isError())
     ecs = client.write_coil( 522, False, unit=UNIT ) # stop scarico/eroga
     assert (not ecs.isError())
-    # client.close()
+
+    client.close()
     ret = {"response": "Reset cycle OK"}
 
     return(jsonify(ret), 200)
