@@ -1,6 +1,6 @@
 # Copyright 2021 Simone Corti. All rights reserved
 
-from flask import Blueprint, redirect, render_template
+from flask import Blueprint, current_app, render_template
 from flask import request, url_for, flash, jsonify
 import logging
 
@@ -17,7 +17,7 @@ main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
 @main_blueprint.route("/", methods=['GET'])
 def splash_screen():
-
+    # current_app.logger.error( "MAIN ROUTE" )
     return render_template('views/controller1/splash.html',
                            title='Welcome')
 

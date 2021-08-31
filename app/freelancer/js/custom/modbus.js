@@ -43,15 +43,34 @@
 
    // Get alarm status on enter
    $.ajax({
-      url : "/modbus/api/",
+      url : "/modbus/api/alarms",
       type : "GET",
       success: readAlarms,
     });
 
     function readAlarms (data, textStatus, jqXHR) {
         console.log(data)
+
+        let alarms = ['K_ALM_TIMEOUT_FASE10',
+        'K_ALM_TIMEOUT_FASE20',
+        'K_ALM_TIMEOUT_FASE30',
+        'K_ALM_TIMEOUT_FASE40',
+        'ALM_START_SOFFIANTE_NOK',
+        'ALM_FUNGO_SOFFIANTE',
+        'ALM_PTC_SOFFIANTE',
+        'ALM_TERMICA_SOFFIANTE',
+        'ALM_TUBO_SCOLLEGATO']
+        var out = '';
+        $.each(data.response, function( index, value ) {
+            console.log( index + ": " + value );
+            if (value) {
+               out += '<span class="badge badge-success">'+alarms[index]+'</span>';
+            } else {
+               out += '<span class="badge badge-danger">'+alarms[index]+'</span>';
+            }
+        });
 //            $('#mbresponse').html(data.response);
-        $('#alarms').html(data.response);
+        $('#alarms').html(out);
     };
 
 
