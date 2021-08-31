@@ -104,14 +104,16 @@ def alarms():
     OpenplcIp = current_app.config["OPENPLC_IP"]
     ModbusPort = current_app.config["OPENPLC_MODBUS_PORT"]
 
+    current_app.logger.info( "ALARMS" )
+
     # NOTE - the default port for modbus is 502
     client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
     client.connect()
 
-    rc = client.read_coils( 440, 111, unit=UNIT )
-
+    rc = client.read_coils( 440, 9, unit=UNIT )
     assert (not rc.isError())
-    print(rc)
+    current_app.logger.info( rc )
+    current_app.logger.info( rc.bits )
     # print(wc.bits[0])
     # logging.info( '%s logged in successfully', user.username )
 
