@@ -108,8 +108,10 @@ def eroga():
     assert (rr.registers == payload)
 
     # write coil regster Enable Ciclo Scarico
-    ecs = client.write_coil( 522, 1, unit=UNIT )
+    ecs = client.write_coil( 522, True, unit=UNIT )
+    rr = client.read_coils( 522, 1, unit=UNIT )
     assert (not ecs.isError())
+    assert (not rr.isError())
 
     # client.close()
     ret = {"response": "Ciclo Scarico Abilitato"}
@@ -126,15 +128,16 @@ def carico():
     client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
     client.connect()
 
-    wc = client.write_coil( 521, 1, unit=UNIT )
-
+    wc = client.write_coil( 521, True, unit=UNIT )
+    rr = client.read_coils( 521, 1, unit=UNIT )
     assert (not wc.isError())
-    print(wc)
+    assert (not rr.isError())
+
     # print(wc.bits[0])
     # logging.info( '%s logged in successfully', user.username )
 
     # client.close()
-    ret = {"response": wc.bits[0]}
+    ret = {"response": rr.bits[0]}
     return(jsonify(ret), 200)
 
 @api_blueprint.route('/modbus/api/stop_carico', methods=['GET'])
@@ -146,15 +149,13 @@ def stop_carico():
     client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
     client.connect()
 
-    wc = client.write_coil( 521, 0, unit=UNIT )
-
+    wc = client.write_coil( 521, False, unit=UNIT )
+    rr = client.read_coils( 521, 1, unit=UNIT )
     assert (not wc.isError())
-    print(wc)
-    # print(wc.bits[0])
-    # logging.info( '%s logged in successfully', user.username )
+    assert(not rr.isError())
 
     # client.close()
-    ret = {"response": wc.bits[0]}
+    ret = {"response": rr.bits[0]}
     return(jsonify(ret), 200)
 
 @api_blueprint.route('/modbus/api/alarms', methods=['GET'])
@@ -205,11 +206,11 @@ def reset_alarms():
     client.connect()
 
     # The response is a 8 bit mask - Why?
-    rq = client.write_coil( 520, 1, unit=UNIT ) # reset allarmi
+    rq = client.write_coil( 520, True, unit=UNIT ) # reset allarmi
     assert (not rq.isError())
-    wc = client.write_coil( 521, 0, unit=UNIT ) # Stop carico
+    wc = client.write_coil( 521, False, unit=UNIT ) # Stop carico
     assert (not wc.isError())
-    ecs = client.write_coil( 522, 0, unit=UNIT ) # stop scarico/eroga
+    ecs = client.write_coil( 522, False, unit=UNIT ) # stop scarico/eroga
     assert (not ecs.isError())
     # client.close()
     ret = {"response": "Reset cycle OK"}
