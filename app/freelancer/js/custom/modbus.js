@@ -6,6 +6,7 @@
 
     $('#eroga').click(function(event) {
         console.log('EROGA')
+        $(this).prop("disabled", true)
 //        console.log($(this).attr("value"))
         console.log($('#peso_finale').val())
         console.log($('#soglia').val())
@@ -21,11 +22,13 @@
             });
 
             function readModbusResponse (data, textStatus, jqXHR) {
+                $('#eroga').prop("disabled", false)
                 console.log(data)
     //            $('#mbresponse').html(data.response);
                 $('#erogresponse').html(data.response);
             };
         } else {
+          setTimeout(function(){ $('#eroga').prop("disabled", false); }, 3000);
           $('#erogresponse').html('Il peso finale non è maggiore della soglia');
         }
         return false;
@@ -33,7 +36,7 @@
 
     $('#s2_carico').click(function(event) {
         console.log('CARICO')
-
+        $(this).prop("disabled", true)
         $.ajax({
           url : "/modbus/api/carico",
           type : "GET",
@@ -41,6 +44,7 @@
         });
 
         function caricoResponse (data, textStatus, jqXHR) {
+            $('#s2_carico').prop("disabled", false)
             console.log(data)
 //            $('#mbresponse').html(data.response);
             $('#carresponse').html(data.response);
@@ -51,7 +55,7 @@
 
     $('#s2_stop_carico').click(function(event) {
         console.log('STOP CARICO')
-
+        $(this).prop("disabled", true)
         $.ajax({
           url : "/modbus/api/stop_carico",
           type : "GET",
@@ -59,6 +63,7 @@
         });
 
         function stopCaricoResponse (data, textStatus, jqXHR) {
+            $('#s2_stop_carico').prop("disabled", false)
             console.log(data)
 //            $('#mbresponse').html(data.response);
             $('#carresponse').html(data.response);
@@ -69,7 +74,7 @@
 
     $('#reset_alarms').click(function(event) {
         console.log('RESET ALARMS')
-
+        $(this).prop("disabled", true)
         $.ajax({
           url : "/modbus/api/reset_alarms",
           type : "GET",
@@ -77,6 +82,7 @@
         });
 
         function resetResponse (data, textStatus, jqXHR) {
+            $('#reset_alarms').prop("disabled", false)
             console.log(data)
 //            $('#mbresponse').html(data.response);
 //            $('#carresponse').html(data.response);
