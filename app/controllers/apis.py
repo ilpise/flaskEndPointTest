@@ -102,7 +102,7 @@ def eroga():
     # write holding registers 0 | peso_finale | 0 | soglia
     # whr = client.write_register( 1125, 1, unit=0x1 )
     rq = client.write_registers( 200, payload, unit=UNIT )
-    rr = client.read_holding_registers( 1, 2, unit=UNIT )
+    rr = client.read_holding_registers( 200, 2, unit=UNIT )
     assert (not rq.isError())  # test that we are not an error
     assert (not rr.isError())  # test that we are not an error
     assert (rr.registers == payload)
