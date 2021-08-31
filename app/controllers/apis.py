@@ -74,6 +74,7 @@ def read():
     print(rr)
     print(rr.registers)
     # logging.info( '%s logged in successfully', user.username )
+    client.close()
 
     ret = {"response": rr.registers}
     return(jsonify(ret), 200)
@@ -94,6 +95,7 @@ def carico():
     print(wc)
     # print(wc.bits[0])
     # logging.info( '%s logged in successfully', user.username )
+    client.close()
 
     ret = {"response": wc.bits[0]}
     return(jsonify(ret), 200)
@@ -116,6 +118,7 @@ def alarms():
     # current_app.logger.error( rc.bits )
     # print(wc.bits[0])
     # logging.info( '%s logged in successfully', user.username )
+    client.close()
 
     ret = {"response": jsonify(rc.bits)}
 
