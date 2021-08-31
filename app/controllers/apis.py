@@ -205,22 +205,13 @@ def reset_alarms():
     client.connect()
 
     # The response is a 8 bit mask - Why?
-    rq = client.write_coil( 440, False, unit=UNIT )
-    # 'K_ALM_TIMEOUT_FASE10',
-    # 'K_ALM_TIMEOUT_FASE20',
-    # 'K_ALM_TIMEOUT_FASE30',
-    # 'K_ALM_TIMEOUT_FASE40',
-    # 'ALM_START_SOFFIANTE_NOK',
-    # 'ALM_FUNGO_SOFFIANTE',
-    # 'ALM_PTC_SOFFIANTE',
-    # 'ALM_TERMICA_SOFFIANTE',
+    rq = client.write_coil( 520, 1, unit=UNIT ) # reset allarmi
     assert (not rq.isError())
-    # current_app.logger.error( rc )
-    # current_app.logger.error( rc.bits )
-    # print(wc.bits[0])
-    # logging.info( '%s logged in successfully', user.username )
-
+    wc = client.write_coil( 521, 0, unit=UNIT ) # Stop carico
+    assert (not wc.isError())
+    ecs = client.write_coil( 522, 0, unit=UNIT ) # stop scarico/eroga
+    assert (not ecs.isError())
     # client.close()
-    ret = {"response": "written"}
+    ret = {"response": "Reset cycle OK"}
 
     return(jsonify(ret), 200)
