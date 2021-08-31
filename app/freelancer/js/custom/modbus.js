@@ -41,6 +41,18 @@
         return false;
     });
 
+   // Get alarm status on enter
+   $.ajax({
+      url : "/modbus/api/",
+      type : "GET",
+      success: readAlarms,
+    });
+
+    function readAlarms (data, textStatus, jqXHR) {
+        console.log(data)
+//            $('#mbresponse').html(data.response);
+        $('#alarms').html(data.response);
+    };
 
 
    }

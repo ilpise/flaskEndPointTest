@@ -97,3 +97,23 @@ def carico():
 
     ret = {"response": wc.bits[0]}
     return(jsonify(ret), 200)
+
+
+@api_blueprint.route('/modbus/api/alarms', methods=['GET'])
+def alarms():
+    OpenplcIp = current_app.config["OPENPLC_IP"]
+    ModbusPort = current_app.config["OPENPLC_MODBUS_PORT"]
+
+    # NOTE - the default port for modbus is 502
+    client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
+    client.connect()
+
+    rc = client.read_coils( 440, 111, unit=UNIT )
+
+    assert (not rc.isError())
+    print(rc)
+    # print(wc.bits[0])
+    # logging.info( '%s logged in successfully', user.username )
+
+    ret = {"response": jsonify(rc.bits)}
+    return(jsonify(ret), 200)

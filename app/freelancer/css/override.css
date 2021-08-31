@@ -1,4 +1,11 @@
 
+/* Changed hed style for touch display */
+.masthead-touch {
+    padding-top: 3rem;
+    padding-bottom: 6rem;
+}
+
+
 .btn-group > .btn {
     position: relative;
     flex: 1 1;
