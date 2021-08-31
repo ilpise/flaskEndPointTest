@@ -11,19 +11,23 @@
                <div class="col">
                     <div class="row">
                       <div class="col">
-                        <p class="text-secondary fs-5">Test carico</p>
+                        <p class="text-secondary fs-6">Test carico</p>
                       </div>
                     </div>
 
                    <div class="row">
                   <div class="col">
-                    <button id="s2_carico" type="button" class="btn btn-primary btn-lg car" >Carico Prodotto</button>
+                    <button id="s2_carico" type="button" class="btn btn-primary btn-lg" >Carico</button>
                   </div>
+                  <div class="col">
+                    <button id="s2_stop_carico" type="button" class="btn btn-primary btn-lg" >Stop Carico</button>
+                  </div>
+
                   </div>
 
                    <div class="row">
                       <div class="col">
-                        <p id="carresponse" class="text-secondary fs-5"></p>
+                        <p id="carresponse" class="text-secondary fs-6"></p>
                       </div>
                     </div>
 
@@ -31,25 +35,27 @@
               <div class="col">
                   <div class="row">
                       <div class="col">
-                        <p class="text-secondary fs-5">Test erogazione</p>
+                        <p class="text-secondary fs-6">Test erogazione</p>
                       </div>
                     </div>
 
                     <div class="row">
                       <div class="col">
-                          <button value="5" type="button" class="btn btn-primary btn-lg erog" >5Kg</button>
+                          <input id="peso_finale" value="15" type="text" class="form-control">
+                          <span class="text-secondary small">Peso finale</span>
                       </div>
                       <div class="col">
-                          <button value="7.5" type="button" class="btn btn-primary btn-lg erog">7.5Kg</button>
+                          <input id="soglia" value="5" type="text" class="form-control">
+                          <span class="text-secondary small">Soglia</span>
                       </div>
                       <div class="col">
-                          <button value="15" type="button" class="btn btn-primary btn-lg erog">15Kg</button>
+                          <button id="eroga" type="button" class="btn btn-primary btn-lg erog">Eroga</button>
                       </div>
                     </div>
 
                     <div class="row">
                       <div class="col">
-                        <p id="erogresponse" class="text-secondary fs-5"></p>
+                        <p id="erogresponse" class="text-secondary fs-6"></p>
                       </div>
                     </div>
               </div>
@@ -59,12 +65,17 @@
 <!--            Alarms-->
             <div class="row">
                 <div class="col">
-                  <p class="text-secondary fs-5">Alarms</p>
+                  <p class="text-secondary fs-6">Alarms</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                  <p id="alarms" class="text-secondary fs-5"></p>
+                  <p id="alarms" class="text-secondary fs-6"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button id="reset_alarms" type="button" class="btn btn-primary btn-lg" >Reset</button>
                 </div>
             </div>
 

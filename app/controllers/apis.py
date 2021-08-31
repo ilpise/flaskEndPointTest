@@ -80,6 +80,43 @@ def read():
     return(jsonify(ret), 200)
 
 
+@api_blueprint.route('/modbus/api/eroga', methods=['POST'])
+def eroga():
+    print( request.get_json() )
+
+    json_data = request.get_json()
+    pef = json_data["peso_finale"]
+    sog = json_data["soglia"]
+    print(pef)
+    print(sog)
+    # payload = [0, pef, 0, sog]
+    payload = [int(pef), int(sog)]
+
+    OpenplcIp = current_app.config["OPENPLC_IP"]
+    ModbusPort = current_app.config["OPENPLC_MODBUS_PORT"]
+
+    # NOTE - the default port for modbus is 502
+    client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
+    client.connect()
+
+    # write holding registers 0 | peso_finale | 0 | soglia
+    # whr = client.write_register( 1125, 1, unit=0x1 )
+    rq = client.write_registers( 200, payload, unit=UNIT )
+    rr = client.read_holding_registers( 1, 2, unit=UNIT )
+    assert (not rq.isError())  # test that we are not an error
+    assert (not rr.isError())  # test that we are not an error
+    assert (rr.registers == payload)
+
+    # write coil regster Enable Ciclo Scarico
+    ecs = client.write_coil( 522, 1, unit=UNIT )
+    assert (not ecs.isError())
+
+    # client.close()
+    ret = {"response": "Ciclo Scarico Abilitato"}
+    # ret = {"response": "test"}
+    return(jsonify(ret), 200)
+
+
 @api_blueprint.route('/modbus/api/carico', methods=['GET'])
 def carico():
     OpenplcIp = current_app.config["OPENPLC_IP"]
@@ -100,6 +137,25 @@ def carico():
     ret = {"response": wc.bits[0]}
     return(jsonify(ret), 200)
 
+@api_blueprint.route('/modbus/api/stop_carico', methods=['GET'])
+def stop_carico():
+    OpenplcIp = current_app.config["OPENPLC_IP"]
+    ModbusPort = current_app.config["OPENPLC_MODBUS_PORT"]
+
+    # NOTE - the default port for modbus is 502
+    client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
+    client.connect()
+
+    wc = client.write_coil( 521, 0, unit=UNIT )
+
+    assert (not wc.isError())
+    print(wc)
+    # print(wc.bits[0])
+    # logging.info( '%s logged in successfully', user.username )
+
+    # client.close()
+    ret = {"response": wc.bits[0]}
+    return(jsonify(ret), 200)
 
 @api_blueprint.route('/modbus/api/alarms', methods=['GET'])
 def alarms():
@@ -112,16 +168,59 @@ def alarms():
     client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
     client.connect()
 
-    rc = client.read_coils( 440, 9, unit=UNIT )
-    assert (not rc.isError())
+    # The response is a 8 bit mask - Why?
+    rc1 = client.read_coils( 440, 1, unit=UNIT )
+    # 'K_ALM_TIMEOUT_FASE10',
+    # 'K_ALM_TIMEOUT_FASE20',
+    # 'K_ALM_TIMEOUT_FASE30',
+    # 'K_ALM_TIMEOUT_FASE40',
+    # 'ALM_START_SOFFIANTE_NOK',
+    # 'ALM_FUNGO_SOFFIANTE',
+    # 'ALM_PTC_SOFFIANTE',
+    # 'ALM_TERMICA_SOFFIANTE',
+
+    rc2 = client.read_coils( 448, 1, unit=UNIT )
+
+    assert (not rc1.isError())
+    assert (not rc2.isError())
     # current_app.logger.error( rc )
     # current_app.logger.error( rc.bits )
     # print(wc.bits[0])
     # logging.info( '%s logged in successfully', user.username )
 
     # client.close()
-    ret = {"response": rc.bits}
+    ret = {"rc1": rc1.bits, "rc2": rc2.bits}
 
-    # ret = {"response": [False, False, True, False, False, False, False, False, False, False, False, False, False, False, False, False]}
+    return(jsonify(ret), 200)
+
+@api_blueprint.route('/modbus/api/reset_alarms', methods=['GET'])
+def reset_alarms():
+    OpenplcIp = current_app.config["OPENPLC_IP"]
+    ModbusPort = current_app.config["OPENPLC_MODBUS_PORT"]
+
+    # current_app.logger.error( "ALARMS" )
+
+    # NOTE - the default port for modbus is 502
+    client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
+    client.connect()
+
+    # The response is a 8 bit mask - Why?
+    rq = client.write_coil( 440, False, unit=UNIT )
+    # 'K_ALM_TIMEOUT_FASE10',
+    # 'K_ALM_TIMEOUT_FASE20',
+    # 'K_ALM_TIMEOUT_FASE30',
+    # 'K_ALM_TIMEOUT_FASE40',
+    # 'ALM_START_SOFFIANTE_NOK',
+    # 'ALM_FUNGO_SOFFIANTE',
+    # 'ALM_PTC_SOFFIANTE',
+    # 'ALM_TERMICA_SOFFIANTE',
+    assert (not rq.isError())
+    # current_app.logger.error( rc )
+    # current_app.logger.error( rc.bits )
+    # print(wc.bits[0])
+    # logging.info( '%s logged in successfully', user.username )
+
+    # client.close()
+    ret = {"response": "written"}
 
     return(jsonify(ret), 200)

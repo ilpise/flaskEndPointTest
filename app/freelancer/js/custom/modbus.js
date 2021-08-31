@@ -4,22 +4,30 @@
   Drupal.behaviors.Modbus = {
     attach: function(context, settings) {
 
-    $('button .erog').click(function(event) {
-        console.log('PING')
-        console.log($(this).attr("value"))
+    $('#eroga').click(function(event) {
+        console.log('EROGA')
+//        console.log($(this).attr("value"))
+        console.log($('#peso_finale').val())
+        console.log($('#soglia').val())
+        var pesoFinale = $('#peso_finale').val();
+        var soglia = $('#soglia').val()
+        if(parseInt(pesoFinale) > parseInt(soglia)) {
+            $.ajax({
+              url : "/modbus/api/eroga",
+              type : "POST",
+              contentType: "application/json",
+              data : JSON.stringify({'peso_finale': pesoFinale , 'soglia' : soglia}),
+              success: readModbusResponse,
+            });
 
-        $.ajax({
-          url : "/modbus/api/",
-          type : "GET",
-          success: readModbusResponse,
-        });
-
-        function readModbusResponse (data, textStatus, jqXHR) {
-            console.log(data)
-//            $('#mbresponse').html(data.response);
-            $('#erogresponse').html(data.response);
-        };
-
+            function readModbusResponse (data, textStatus, jqXHR) {
+                console.log(data)
+    //            $('#mbresponse').html(data.response);
+                $('#erogresponse').html(data.response);
+            };
+        } else {
+          $('#erogresponse').html('Il peso finale non è maggiore della soglia');
+        }
         return false;
     });
 
@@ -36,6 +44,42 @@
             console.log(data)
 //            $('#mbresponse').html(data.response);
             $('#carresponse').html(data.response);
+        };
+
+        return false;
+    });
+
+    $('#s2_stop_carico').click(function(event) {
+        console.log('STOP CARICO')
+
+        $.ajax({
+          url : "/modbus/api/stop_carico",
+          type : "GET",
+          success: stopCaricoResponse,
+        });
+
+        function stopCaricoResponse (data, textStatus, jqXHR) {
+            console.log(data)
+//            $('#mbresponse').html(data.response);
+            $('#carresponse').html(data.response);
+        };
+
+        return false;
+    });
+
+    $('#reset_alarms').click(function(event) {
+        console.log('RESET ALARMS')
+
+        $.ajax({
+          url : "/modbus/api/reset_alarms",
+          type : "GET",
+          success: resetResponse,
+        });
+
+        function resetResponse (data, textStatus, jqXHR) {
+            console.log(data)
+//            $('#mbresponse').html(data.response);
+//            $('#carresponse').html(data.response);
         };
 
         return false;
@@ -61,7 +105,7 @@
         'ALM_TERMICA_SOFFIANTE',
         'ALM_TUBO_SCOLLEGATO']
         var out = '';
-        $.each(data.response, function( index, value ) {
+        $.each(data.rc1, function( index, value ) {
             console.log( index + ": " + value );
             if (value) {
                out += '<span class="badge badge-success">'+alarms[index]+'</span>';
