@@ -28,7 +28,9 @@ class DevelopmentConfig(ProductionConfig):
     OPENPLC_IP = '172.20.0.2'
     OPENPLC_MODBUS_PORT = 502
 
-
+    # COGES
+    COGES_PORT = '/dev/ttyACM0'
+    COGES_BAUDRATE = 9600
 # class TestingConfig(ProductionConfig):
 #     DEBUG = False
 #     TESTING = True
