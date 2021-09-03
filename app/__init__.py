@@ -67,6 +67,10 @@ def test_modbus_thread():
         loop.close()
         print( "--------DONE RUN_WITH_NO_LOOP-------------" )
 
+# def test_coges_thread():
+#     while True:
+#         print( "---------------------RUN_WITH_NO_LOOP-----------------" )
+#         print( "--------DONE RUN_WITH_NO_LOOP-------------" )
 
 # def smart_card_thread():
 #     while True:
@@ -94,6 +98,11 @@ def create_app(config_class=DevelopmentConfig):
 
     # UNCOMMENT TO HAVE MODBUS DAEMON
     # thread = threading.Thread( name='test_modbus_thread', target=test_modbus_thread )
+    # thread.setDaemon( True )
+    # thread.start()
+
+    # UNCOMMENT TO HAVE COGES DAEMON
+    # thread = threading.Thread( name='test_coges_thread', target=test_coges_thread )
     # thread.setDaemon( True )
     # thread.start()
 
