@@ -6,34 +6,45 @@
     <div class="card" style="width: 100%;">
       <div class="card-body">
 
-          <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-          <div class="btn-group mr-2" role="group" aria-label="First group">
-            <button type="button" class="btn btn-secondary">1</button>
-            <button type="button" class="btn btn-secondary">2</button>
-            <button type="button" class="btn btn-secondary">3</button>
-            <button type="button" class="btn btn-secondary">4</button>
-          </div>
-          <div class="btn-group mr-2" role="group" aria-label="Second group">
-            <button type="button" class="btn btn-secondary">5</button>
-            <button type="button" class="btn btn-secondary">6</button>
-            <button type="button" class="btn btn-secondary">7</button>
-          </div>
-          <div class="btn-group" role="group" aria-label="Third group">
-            <button type="button" class="btn btn-secondary">8</button>
-          </div>
+        <div class="row">
+           <div class="col">
+            <p class="text-secondary fs-6">Actual credit</p>
+            <p id="credit" class="text-secondary fs-4">0</p>
+           </div>
         </div>
+
+
+        <div class="row">
+           <div class="col">
+            <button value="20" type="button" class="btn btn-primary btn-lg" >POLL</button>
+           </div>
+           <div class="col">
+            <button value="21" type="button" class="btn btn-primary btn-lg" >ERROR</button>
+           </div>
+           <div class="col">
+            <button value="25" type="button" class="btn btn-primary btn-lg" >SYSTEM STATUS</button>
+           </div>
+
+        </div>
+
+        <div class="row">
+           <div class="col">
+            <button id="testChecksum" type="button" class="btn btn-primary btn-lg" >Checksum</button>
+           </div>
+        </div>
+
 
         <div class="row">
           <div class="col">
             <div style="height: 30vh;">
-                <p id="cogesresp" style="color:blue;"></p>
+                <p id="cogesresp" class="text-secondary fs-6"></p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-
+<script src="{{ url_for('static', filename='js/custom/coges_daemon.js') }}"></script>
 <script src="{{ url_for('static', filename='js/custom/testcoges.js') }}"></script>
 
 {% endblock %}

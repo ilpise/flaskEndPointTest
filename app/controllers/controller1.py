@@ -84,13 +84,14 @@ def splash_screen():
 #
 #     return render_template('views/controller1/member_base.html')
 #
-# @main_blueprint.route('/coges')
-# def coges():
-#     if not current_user.is_authenticated:
-#         # return redirect(url_for('main.login'))
-#         return redirect( url_for( 'main.login_screen' ) )
-#
-#     return render_template('views/controller1/testcoges.html')
+@main_blueprint.route('/coges')
+def coges():
+    return render_template('views/controller1/testcoges.html')
+
+@main_blueprint.route('/test_acquisto')
+def test_acquisto():
+    return render_template('views/controller1/test_acquisto.html')
+
 #
 #
 # @main_blueprint.route("/testsc")
