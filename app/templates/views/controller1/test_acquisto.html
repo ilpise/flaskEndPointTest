@@ -1,0 +1,52 @@
+{% extends "common/page_base.html" %}
+
+{% block content %}
+
+
+    <div class="card" style="width: 100%;">
+      <div class="card-body" style="min-height: 30vh;">
+
+        <div class="row">
+          <div class="col">
+            <p class="text-secondary fs-2">Gruppo 6</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+              <p class="text-secondary fs-6">READ CREDIT</p>
+              <button value="70" type="button" class="btn btn-primary btn-lg">A6 all credits</button>
+              <button value="71" type="button" class="btn btn-primary btn-lg">B6 Chash credit</button>
+              <button value="72" type="button" class="btn btn-primary btn-lg">C6 Cashless #1</button>
+              <button value="73" type="button" class="btn btn-primary btn-lg">D6 Cashless #2</button>
+              <button value="74" type="button" class="btn btn-primary btn-lg" >E6 Credit card</button>
+
+          </div>
+          <div class="col">
+              <p class="text-secondary fs-6">INCREASE CREDIT</p>
+              <button value="75" type="button" class="btn btn-primary btn-lg">F6 wo change</button>
+              <button value="77" type="button" class="btn btn-primary btn-lg" >H6 w change</button>
+          </div>
+          <div class="col">
+              <p class="text-secondary fs-6">RESET CREDIT</p>
+              <button value="76" type="button" class="btn btn-primary btn-lg" >G6 wo change</button>
+              <button value="76" type="button" class="btn btn-danger btn-lg" >I6 w change</button>
+          </div>
+          <div class="col">
+              <p class="text-secondary fs-6">SALE</p>
+              <button value="80" type="button" class="btn btn-primary btn-lg" >J6</button>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p id="cogesresp" class="text-secondary fs-2"></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+<script src="{{ url_for('static', filename='js/custom/testcoges.js') }}"></script>
+{% endblock %}
