@@ -1,18 +1,19 @@
 # Copyright 2021 Simone Corti . All rights reserved
 
-# from flask_login import UserMixin, login_manager
-from flask_user import UserMixin
+from flask_login import UserMixin, login_manager
+# from flask_user import UserMixin
 # from flask_user.forms import RegisterForm
 from flask_wtf import FlaskForm
 # from werkzeug.security import check_password_hash
 from wtforms import StringField, SubmitField, validators
-from app import db, login_manager
+# from app import db, login_manager
+from app import db
 from dataclasses import dataclass
 
-@login_manager.user_loader
-def load_user(user_id):
-    print(user_id)
-    return User.query.filter_by(id=user_id).first()
+# @login_manager.user_loader
+# def load_user(user_id):
+#     print(user_id)
+#     return User.query.filter_by(id=user_id).first()
 
 # Define the User data model. Make sure to add the flask_user.UserMixin !!
 @dataclass
@@ -20,10 +21,12 @@ class User(db.Model, UserMixin):
     id: int
     active: bool
     username: str
-    password: str
-    email: str
+    # password: str
+    # email: str
     first_name: str
     last_name: str
+    pin: str
+    credit: str
     roles: str
 
     __tablename__ = 'users'
@@ -34,13 +37,16 @@ class User(db.Model, UserMixin):
     # User authentication information. The collation='NOCASE' is required
     # to search case insensitively when USER_IFIND_MODE is 'nocase_collation'.
     username = db.Column( db.String( 100, collation='NOCASE' ), nullable=False, unique=True )
-    password = db.Column( db.String( 255 ), nullable=False, server_default='' )
-    email = db.Column( db.String( 255 ), nullable=False, unique=True )
-    email_confirmed_at = db.Column( db.DateTime() )
+    # password = db.Column( db.String( 255 ), nullable=False, server_default='' )
+    # email = db.Column( db.String( 255 ), nullable=False, unique=True )
+    # email_confirmed_at = db.Column( db.DateTime() )
 
     # User information
     first_name = db.Column( db.String( 100, collation='NOCASE' ), nullable=False, server_default='' )
     last_name = db.Column( db.String( 100, collation='NOCASE' ), nullable=False, server_default='' )
+
+    pin = db.Column( db.String( 255 ), nullable=False, server_default='' )
+    credit = db.Column( db.String( 255 ), nullable=False, server_default='' )
 
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
